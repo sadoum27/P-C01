@@ -1,14 +1,16 @@
 #!/bin/bash
-# Script : find_string.sh
-# Objectif : Rechercher une chaîne spécifique dans un fichier
-read -p "Nom du fichier :"filename
-if [ ! -f "$filename" ]; then
-    echo "Erreur : le fichier '$filename' n'existe pas."
-    exit 1
+# Pour trouver si une chaine de caractères existe dans un fichier, on recupère d'abord le nom du fichier
+read -p " " path
+# Ensuite on verifie si ce que l'utilisateur a tapé est un fichier existant
+if [ ! -f "$path" ]; then 
+# Si ce n'est pas un fichier, on affiche le message en dessous
+     echo "Erreur : Le fichier '$fichier' n'existe pas."
+     exit 1
+else # Sinon (donc c'est un fichier) on recupère la chaine à chercher et on affiche le résultat
+    read -p " " chaine
+    grep --color=always -n "$chaine" "$path" 
 fi
-read -p "Chaîne à rechercher :"search
-if grep -q "$search" "$filename"; then
-    echo "La chaîne '$search' a été trouvée dans $filename."
-else
-    echo "La chaîne '$search' n'a pas été trouvée dans $filename."
+# Dans le cas ou la commande grep ne trouve pas la chaine dans le fichier, on affiche le message en dessous
+if [ $? -ne 0 ]; then  
+    echo "La chaine '$chaine' n'a pas ét trouvée dans $path."
 fi
